@@ -1,0 +1,27 @@
+{
+  "name": "distinction-architecture-toolkit",
+  "private": true,
+  "version": "0.1.0",
+  "description": "AI-assisted architecture interpretation toolkit with Skill and VSCode extension exits.",
+  "license": "MIT",
+  "type": "module",
+  "workspaces": [
+    "packages/core",
+    "packages/analyzer",
+    "packages/rules",
+    "packages/report-model",
+    "packages/prompts",
+    "vscode-extension"
+  ],
+  "scripts": {
+    "build": "tsc -b packages/core packages/report-model packages/analyzer packages/rules packages/prompts vscode-extension",
+    "clean": "node scripts/clean.mjs",
+    "test": "node --test packages/*/dist/**/*.test.js",
+    "lint:architecture": "node scripts/check-architecture-boundaries.mjs",
+    "skill:check": "node scripts/check-skill-package.mjs"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.30",
+    "typescript": "^5.4.5"
+  }
+}

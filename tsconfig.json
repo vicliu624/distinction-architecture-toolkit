@@ -1,0 +1,23 @@
+{
+  "files": [],
+  "references": [
+    {
+      "path": "packages/core"
+    },
+    {
+      "path": "packages/report-model"
+    },
+    {
+      "path": "packages/analyzer"
+    },
+    {
+      "path": "packages/rules"
+    },
+    {
+      "path": "packages/prompts"
+    },
+    {
+      "path": "vscode-extension"
+    }
+  ]
+}

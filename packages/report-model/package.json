@@ -1,0 +1,21 @@
+{
+  "name": "@explicit-architecture/report-model",
+  "version": "0.1.0",
+  "description": "Report schemas and markdown rendering.",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -b",
+    "test": "node --test dist/**/*.test.js"
+  },
+  "dependencies": {
+    "@explicit-architecture/core": "0.1.0"
+  }
+}
