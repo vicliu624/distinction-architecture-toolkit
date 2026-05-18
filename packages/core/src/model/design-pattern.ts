@@ -14,7 +14,8 @@ export type DesignPattern =
   | "Command Port"
   | "Projection / Snapshot"
   | "Guardrail Checker"
-  | "Final Owner"\n  | "Architecture Inventory";
+  | "Final Owner"
+  | "Architecture Inventory";
 
 export interface DesignPatternConstraint {
   pattern: DesignPattern;

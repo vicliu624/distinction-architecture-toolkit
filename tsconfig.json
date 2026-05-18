@@ -5,13 +5,13 @@
       "path": "packages/core"
     },
     {
+      "path": "packages/rules"
+    },
+    {
       "path": "packages/report-model"
     },
     {
       "path": "packages/analyzer"
-    },
-    {
-      "path": "packages/rules"
     },
     {
       "path": "packages/prompts"

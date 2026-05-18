@@ -1,7 +1,7 @@
 {
   "name": "explicit-architecture-vscode",
-  "displayName": "Explicit Architecture",
-  "description": "Architecture interpretation, responsibility analysis, and legacy surface inventory.",
+  "displayName": "Distinction Architecture",
+  "description": "Evidence-first architecture interpretation and local knowledge workflow.",
   "version": "0.1.0",
   "publisher": "vicliu",
   "license": "MIT",
@@ -14,23 +14,19 @@
   "type": "module",
   "main": "./dist/extension.js",
   "activationEvents": [
-    "onCommand:explicitArchitecture.explainSelectedCode",
-    "onCommand:explicitArchitecture.findResponsibilityOverload",
-    "onCommand:explicitArchitecture.generateSurfaceInventory"
+    "onCommand:distinctionArchitecture.initializeLocalKnowledge",
+    "onCommand:distinctionArchitecture.explainSelectedCode",
+    "onCommand:explicitArchitecture.explainSelectedCode"
   ],
   "contributes": {
     "commands": [
       {
-        "command": "explicitArchitecture.explainSelectedCode",
-        "title": "Explicit Architecture: Explain Selected Code"
+        "command": "distinctionArchitecture.initializeLocalKnowledge",
+        "title": "Distinction Architecture: Initialize Local Knowledge"
       },
       {
-        "command": "explicitArchitecture.findResponsibilityOverload",
-        "title": "Explicit Architecture: Find Responsibility Overload"
-      },
-      {
-        "command": "explicitArchitecture.generateSurfaceInventory",
-        "title": "Explicit Architecture: Generate Surface Inventory"
+        "command": "distinctionArchitecture.explainSelectedCode",
+        "title": "Distinction Architecture: Explain Selected Code"
       }
     ]
   },

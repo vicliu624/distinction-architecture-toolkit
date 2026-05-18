@@ -16,7 +16,6 @@
     "test": "node --test dist/**/*.test.js"
   },
   "dependencies": {
-    "@explicit-architecture/core": "0.1.0",
-    "@explicit-architecture/analyzer": "0.1.0"
+    "@explicit-architecture/core": "0.1.0"
   }
 }

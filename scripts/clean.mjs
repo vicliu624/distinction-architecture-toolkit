@@ -1,4 +1,4 @@
-import { rmSync } from "node:fs";
+import { readdirSync, rmSync, statSync } from "node:fs";
 import { join } from "node:path";
 
 const roots = [
@@ -14,3 +14,18 @@ const roots = [
 for (const path of roots) {
   rmSync(join(process.cwd(), path), { recursive: true, force: true });
 }
+
+function removeBuildInfo(dir) {
+  for (const entry of readdirSync(dir)) {
+    if (entry === "node_modules" || entry === ".git") continue;
+    const full = join(dir, entry);
+    const stat = statSync(full);
+    if (stat.isDirectory()) {
+      removeBuildInfo(full);
+    } else if (entry.endsWith(".tsbuildinfo")) {
+      rmSync(full, { force: true });
+    }
+  }
+}
+
+removeBuildInfo(process.cwd());
