@@ -30,6 +30,7 @@ Product Baseline + Selection Architecture Audit MVP
 - 它解决什么问题；
 - 它不是什么；
 - VS Code 插件、Skill、packages/core、rules、analyzer 如何分工；
+- `.distinction/` 本地架构知识库如何沉淀跨会话架构记忆；
 - 第一版 MVP 做到哪里；
 - 后续 AI 施工必须遵守哪些架构约束。
 
@@ -46,6 +47,9 @@ README.md
 docs/PRODUCT_SPEC.md
   完整产品规格，定义产品形态、能力模型、概念边界和 MVP 范围。
 
+docs/LOCAL_KNOWLEDGE_SPEC.md
+  本地架构知识库规格，定义 .distinction/ 目录、更新时机、stale 检查、读写权限与跨会话记忆机制。
+
 docs/IMPLEMENTATION_PLAN.md
   第一阶段施工路线与验收标准。
 
@@ -56,7 +60,7 @@ docs/SKILL_SPEC.md
   Skill 的职责、输入输出、AI 施工约束与报告协议。
 
 docs/OPENWOLF_REFERENCE.md
-  对 OpenWolf 的借鉴边界：借鉴工程机制，不借鉴产品定位。
+  对外部参考项目的借鉴边界：借鉴工程机制，不借鉴产品定位。
 ```
 
 ### 3.2 Skill 基线
@@ -88,7 +92,7 @@ vscode-extension/
 
 第一阶段 MVP 聚焦：
 
-> 选区架构审计。
+> 选区架构审计 + 本地架构记忆沉淀。
 
 完整闭环如下：
 
@@ -97,6 +101,8 @@ vscode-extension/
     ↓
 定位最近符号：函数 / 类 / 接口 / 文件
     ↓
+读取 .distinction/ 中已有架构记忆、施工规则和纠错记忆
+    ↓
 收集路径、命名、imports、references、简单调用关系
     ↓
 判断架构层级与职责类型
@@ -104,6 +110,10 @@ vscode-extension/
 检测职责过载与不合理耦合点
     ↓
 生成 Markdown / JSON 架构审计报告
+    ↓
+写入 reports/latest-selection-insight.md 与 session-log.md
+    ↓
+对高价值规则、final owner、纠错记忆提出持久化建议
     ↓
 Skill 基于同一报告 schema 生成 AI 施工约束与纠偏建议
 ```
@@ -135,11 +145,12 @@ Skill 基于同一报告 schema 生成 AI 施工约束与纠偏建议
 建议优先顺序：
 
 1. `packages/core`：定义核心类型；
-2. `packages/rules`：实现第一批规则；
-3. `packages/report-model`：定义 JSON / Markdown 报告；
+2. `packages/report-model`：定义 JSON / Markdown 报告；
+3. `packages/rules`：实现第一批规则；
 4. `packages/analyzer`：实现路径、命名、import、symbol 粗分析；
-5. `vscode-extension`：实现 `Explain Selected Code` 命令；
-6. `skill/`：使用报告 schema 生成解释。
+5. `.distinction/` 初始化与本地知识库读写；
+6. `vscode-extension`：实现 `Explain Selected Code` 命令；
+7. `skill/`：使用报告 schema 与本地知识库生成解释。
 
 ---
 
@@ -159,6 +170,10 @@ FinalOwnerCandidate
 SurfaceKind
 ConstructionConstraint
 ArchitectureInsightReport
+LocalKnowledgeRecord
+KnowledgeSource
+KnowledgeConfidence
+KnowledgeStatus
 ```
 
 ---
@@ -191,7 +206,9 @@ RESPONSIBILITY_OVERLOAD
 - AI Collaboration Impact：对 AI 协作的影响；
 - Suggested Correction：纠偏建议；
 - Final Owner Candidate：最终归属候选；
-- Confidence：置信度。
+- Confidence：置信度；
+- Knowledge Source：该判断来自静态事实、推断还是用户确认；
+- Stale Status：该判断是否可能已过期。
 
 禁止只输出泛泛结论，例如：
 
@@ -208,25 +225,45 @@ RESPONSIBILITY_OVERLOAD
 为什么这些职责不应该混在一起？
 AI 后续修改会如何误解？
 应该迁移到哪里？
+是否需要写入 .distinction/ 作为长期规则或纠错记忆？
 ```
 
 ---
 
-## 10. 验收标准
+## 10. 本地知识库验收标准
+
+第一阶段应至少保留以下落点：
+
+```text
+1. dat init 或等价初始化能力可以创建 .distinction/ 最小结构；
+2. config.json 支持路径层级规则与命名规则；
+3. reports/latest-selection-insight.md 可以保存最近一次选区审计报告；
+4. session-log.md 可以记录关键分析与决策摘要；
+5. coupling-risks.json 有结构化 schema；
+6. construction-rules.md 有人工确认写入路径；
+7. correction-memory.md 有 Do-Not-Repeat 模板；
+8. 每条长期知识能表达 source、confidence、status。
+```
+
+---
+
+## 11. 总体验收标准
 
 第一阶段完成时，应满足：
 
 - 中文 README 可独立解释产品；
 - `docs/PRODUCT_SPEC.md` 可独立解释完整产品形态；
+- `docs/LOCAL_KNOWLEDGE_SPEC.md` 可独立解释本地架构知识库机制；
 - `docs/IMPLEMENTATION_PLAN.md` 可指导后续开发；
 - `skill/SKILL.md` 可约束 AI 输出结构化架构审计；
 - VS Code 插件规格明确“选中代码后输出什么”；
 - packages 目录职责清晰；
-- 后续会话无需依赖本次聊天记录，也能继续施工。
+- 后续会话无需依赖本次聊天记录，也能继续施工；
+- 用户纠正、施工规则、final owner、耦合风险不会只停留在聊天记录里。
 
 ---
 
-## 11. 后续施工纪律
+## 12. 后续施工纪律
 
 任何后续 PR 或 AI 修改必须遵守：
 
@@ -236,4 +273,6 @@ AI 后续修改会如何误解？
 4. 不得把 VS Code 插件和 Skill 做成两套互不一致的语义；
 5. 不得直接绑定单一 AI 工具；
 6. 所有判断必须尽量携带 evidence；
-7. 所有纠偏建议必须尽量说明 final owner。
+7. 所有纠偏建议必须尽量说明 final owner；
+8. 高价值的用户纠正和施工约束必须能沉淀到 `.distinction/`；
+9. 自动推断必须区分 source、confidence 和 stale status。
