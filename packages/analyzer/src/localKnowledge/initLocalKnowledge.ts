@@ -5,6 +5,8 @@ import {
   correctionMemoryTemplate,
   couplingRisksTemplate,
   latestSelectionInsightTemplate,
+  functionModulesTemplate,
+  specManifestTemplate,
   localKnowledgeFiles,
   constructionRulesTemplate,
   sessionLogTemplate
@@ -23,6 +25,8 @@ export async function initLocalKnowledge(workspaceRoot: string): Promise<InitLoc
     [localKnowledgeFiles.constructionRules, constructionRulesTemplate()],
     [localKnowledgeFiles.couplingRisks, couplingRisksTemplate()],
     [localKnowledgeFiles.sessionLog, sessionLogTemplate()],
+    [localKnowledgeFiles.specManifest, specManifestTemplate()],
+    [localKnowledgeFiles.functionModules, functionModulesTemplate()],
     [localKnowledgeFiles.latestSelectionInsight, latestSelectionInsightTemplate()]
   ];
 

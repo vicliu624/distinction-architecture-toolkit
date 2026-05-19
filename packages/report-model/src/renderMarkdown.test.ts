@@ -49,21 +49,22 @@ test("renders required ArchitectureInsightReport sections", () => {
 
   const markdown = renderMarkdown(report);
   for (const heading of [
-    "# Architecture Insight Report",
-    "## Selected Target",
-    "## Architecture Role",
-    "## Layer Assessment",
-    "## Responsibility Breakdown",
-    "## Evidence",
-    "## Incoming / Outgoing Relations",
-    "## Impact Scope",
-    "## Responsibility Overload",
-    "## Unreasonable Coupling Points",
-    "## Final Owner Candidate",
-    "## AI Collaboration Risk",
-    "## Construction Constraints",
-    "## Suggested Correction",
-    "## Persistence Suggestions"
+    "# 架构洞察报告",
+    "## 即时摘要",
+    "## 选中目标",
+    "## 架构角色",
+    "## 分层评估",
+    "## 职责拆解",
+    "## 证据",
+    "## 传入 / 传出关系",
+    "## 影响范围",
+    "## 职责过载",
+    "## 不合理耦合点",
+    "## 最终归属候选",
+    "## AI 协作风险",
+    "## 施工约束",
+    "## 建议修正",
+    "## 持久化建议"
   ]) {
     assert.match(markdown, new RegExp(escapeRegExp(heading)));
   }

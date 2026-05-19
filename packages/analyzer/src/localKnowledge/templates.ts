@@ -4,6 +4,8 @@ export const localKnowledgeFiles = {
   constructionRules: "construction-rules.md",
   couplingRisks: "coupling-risks.json",
   sessionLog: "session-log.md",
+  specManifest: "specs/manifest.json",
+  functionModules: "specs/function-modules.md",
   latestSelectionInsight: "reports/latest-selection-insight.md"
 } as const;
 
@@ -91,4 +93,25 @@ export function latestSelectionInsightTemplate(): string {
     "",
     "No selection analysis has been generated yet."
   ].join("\n");
+}
+
+export function functionModulesTemplate(): string {
+  return [
+    "# 功能模块索引",
+    "",
+    "这个文件只是功能模块索引，不是规格本体。大型系统应在 `specs/modules/<module-id>/SPEC.md` 中维护每个模块自己的规格。",
+    "",
+    "## 模块",
+    "",
+    "尚未生成模块候选。请选择代码并运行 Distinction Architecture 分析。"
+  ].join("\n");
+}
+
+export function specManifestTemplate(): string {
+  return `${JSON.stringify({
+    version: 1,
+    generated_at: null,
+    note: "Spec registry. function-modules.md is only an index; module SPEC.md files are the spec body.",
+    modules: []
+  }, null, 2)}\n`;
 }

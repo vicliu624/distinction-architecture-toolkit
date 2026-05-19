@@ -1,4 +1,13 @@
-node_modules/
-src/
+src/**
+*.ts
+*.tsbuildinfo
 tsconfig.json
-*.map
+node_modules/**
+../**
+*.vsix
+
+!dist/extension.js
+!dist/extension.js.map
+!README.md
+!LICENSE
+!package.json

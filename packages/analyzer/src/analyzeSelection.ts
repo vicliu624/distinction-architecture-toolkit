@@ -261,8 +261,22 @@ function layerSummary(primaryLayer: Layer, observedLayers: Layer[]): string {
 }
 
 function inferTargetName(text: string): string | undefined {
-  const match = text.match(/\b(class|interface|type|function|const|let|var)\s+([A-Z_a-z][A-Z_a-z0-9]*)/);
-  return match?.[2];
+  const patterns = [
+    /\bexport\s+class\s+([A-Z_a-z][A-Z_a-z0-9]*)/,
+    /\bclass\s+([A-Z_a-z][A-Z_a-z0-9]*)/,
+    /\bexport\s+function\s+([A-Z_a-z][A-Z_a-z0-9]*)/,
+    /\bfunction\s+([A-Z_a-z][A-Z_a-z0-9]*)/,
+    /\bexport\s+interface\s+([A-Z_a-z][A-Z_a-z0-9]*)/,
+    /\binterface\s+([A-Z_a-z][A-Z_a-z0-9]*)/,
+    /\bexport\s+type\s+([A-Z_a-z][A-Z_a-z0-9]*)/,
+    /\btype\s+([A-Z_a-z][A-Z_a-z0-9]*)/,
+    /\b(?:export\s+)?(?:const|let|var)\s+([A-Z_a-z][A-Z_a-z0-9]*)/
+  ];
+  for (const pattern of patterns) {
+    const match = text.match(pattern);
+    if (match?.[1]) return match[1];
+  }
+  return undefined;
 }
 
 function inferSymbolRole(text: string): SymbolRole {

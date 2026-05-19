@@ -14,8 +14,12 @@
   "type": "module",
   "main": "./dist/extension.js",
   "activationEvents": [
+    "workspaceContains:src/application/message_service.ts",
     "onCommand:distinctionArchitecture.initializeLocalKnowledge",
     "onCommand:distinctionArchitecture.explainSelectedCode",
+    "onCommand:distinctionArchitecture.openLatestReport",
+    "onCommand:distinctionArchitecture.openLocalKnowledgeFolder",
+    "onCommand:distinctionArchitecture.openSampleTarget",
     "onCommand:explicitArchitecture.explainSelectedCode"
   ],
   "contributes": {
@@ -27,21 +31,34 @@
       {
         "command": "distinctionArchitecture.explainSelectedCode",
         "title": "Distinction Architecture: Explain Selected Code"
+      },
+      {
+        "command": "distinctionArchitecture.openLatestReport",
+        "title": "Distinction Architecture: Open Latest Report"
+      },
+      {
+        "command": "distinctionArchitecture.openLocalKnowledgeFolder",
+        "title": "Distinction Architecture: Open Local Knowledge Folder"
+      },
+      {
+        "command": "distinctionArchitecture.openSampleTarget",
+        "title": "Distinction Architecture: Open Sample Target"
       }
     ]
   },
   "scripts": {
     "compile": "tsc -b",
+    "bundle": "esbuild src/extension.ts --bundle --platform=node --format=esm --external:vscode --outfile=dist/extension.js --sourcemap",
     "watch": "tsc -b -w",
-    "package": "vsce package"
+    "package": "npm run compile && npm run bundle && vsce package --allow-missing-repository"
   },
-  "dependencies": {
+  "dependencies": {},
+  "devDependencies": {
     "@explicit-architecture/core": "0.1.0",
     "@explicit-architecture/analyzer": "0.1.0",
     "@explicit-architecture/report-model": "0.1.0",
-    "@explicit-architecture/rules": "0.1.0"
-  },
-  "devDependencies": {
+    "@explicit-architecture/rules": "0.1.0",
+    "esbuild": "^0.28.0",
     "@types/vscode": "^1.88.0",
     "@vscode/vsce": "^2.15.0"
   }

@@ -1,5 +1,19 @@
 # Distinction Architecture Toolkit
 
+## VS Code Extension Alpha
+
+The repository now includes a usable VS Code extension alpha. It can be installed locally, debugged with F5, packaged as a VSIX, initialized with `.distinction/`, and used to generate a Markdown architecture insight report from selected code.
+
+Quick start:
+
+```bash
+npm install
+npm run build
+npm run package -w vscode-extension
+```
+
+For F5 debugging, sample-project testing, command usage, local knowledge files, and VSIX installation instructions, see [docs/VSCODE_USAGE.md](docs/VSCODE_USAGE.md).
+
 面向 AI 协作开发的架构理解、职责拆解与结构纠偏工具包。
 
 这个项目用于帮助开发者理解和治理由大模型生成、修改或长期参与维护的软件工程。它关注的不是“代码能不能运行”，也不是传统意义上的格式规范或复杂度检查，而是：
